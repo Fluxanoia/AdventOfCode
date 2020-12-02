@@ -1,5 +1,9 @@
 module Flux.Core where
 
+bti :: Bool -> Int
+bti True  = 1
+bti False = 0
+
 nsets :: Int -> [a] -> [[a]]
 nsets _ []     = []
 nsets 0 _      = []
