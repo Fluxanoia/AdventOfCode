@@ -1,5 +1,10 @@
 module Flux.Core where
 
+ternary :: Bool -> a -> a -> a
+ternary b x y
+    | b         = x
+    | otherwise = y
+
 bti :: Bool -> Int
 bti True  = 1
 bti False = 0
