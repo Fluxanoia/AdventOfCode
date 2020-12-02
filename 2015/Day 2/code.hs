@@ -18,8 +18,4 @@ task_two str = sum $ map (\(p, v) -> p + v) (zip min_perims volumes)
         dims = map (\dim -> map (\i -> read i::Int) (splitOn "x" dim)) str
 
 main :: IO ()
-main = do
-  contents <- readFile "input.txt"
-  let input = lines contents :: [String]
-  print ("Task One: " ++ (show $ task_one input))
-  print ("Task One: " ++ (show $ task_two input))
+main = flux_main id task_one task_two

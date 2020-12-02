@@ -1,3 +1,5 @@
+import Flux.Core
+
 t :: Char -> Int
 t '(' = 1
 t ')' = -1
@@ -15,8 +17,4 @@ task_two str = snd $ foldl f (0, 0) str
             | otherwise = (floor + (t char), index + 1)
 
 main :: IO ()
-main = do
-  contents <- readFile "input.txt"
-  let input = foldr (++) [] (lines contents) :: String
-  print ("Task One: " ++ (show $ task_one input))
-  print ("Task Two: " ++ (show $ task_two input))
+main = flux_main input_str task_one task_two

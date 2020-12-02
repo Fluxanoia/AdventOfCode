@@ -1,4 +1,5 @@
 import Data.List.Split
+import Flux.Core
 
 is_valid :: String -> Bool
 is_valid str = num >= l && num <= u
@@ -28,8 +29,4 @@ task_two :: [String] -> Int
 task_two str = length $ filter id (map is_actually_valid str)
 
 main :: IO ()
-main = do
-  contents <- readFile "input.txt"
-  let input = lines contents :: [String]
-  print ("Task One: " ++ (show $ task_one input))
-  print ("Task Two: " ++ (show $ task_two input))
+main = flux_main id task_one task_two
