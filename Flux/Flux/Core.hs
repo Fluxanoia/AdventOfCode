@@ -1,3 +1,5 @@
+module Flux.Core where
+
 nsets :: Int -> [a] -> [[a]]
 nsets _ []     = []
 nsets 0 _      = []
