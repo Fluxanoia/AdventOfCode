@@ -49,7 +49,7 @@ get_entries strs = splitOn "|" $ foldl f "" strs
         f b a = ternary ((length a) == 0) (b ++ "|") (b ++ " " ++ a)
 
 get_fields :: [String] -> [[String]]
-get_fields strs = map (map (\s -> reverse (take 3 $ reverse s))) raw_fields
+get_fields strs = map (map $ take_end 3) raw_fields
     where 
         raw_fields = map ((lose 1) . (splitOn ":")) $ get_entries strs
 
