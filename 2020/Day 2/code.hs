@@ -4,11 +4,9 @@ import Flux.Core
 is_valid :: String -> Bool
 is_valid str = num >= l && num <= u
     where 
-        l = read (head $ splitOn "-" (head split))::Int
-        u = read (last $ splitOn "-" (head split))::Int
-        num = length $ filter ((==) letter) word
-        letter = head (split !! 1)
-        word = last split
+        l = sti $ head $ splitOn "-" (head split)
+        u = sti $ last $ splitOn "-" (head split)
+        num = length $ filter ((==) (head $ split !! 1)) (last split)
         split = splitOn " " str
 
 is_actually_valid :: String -> Bool

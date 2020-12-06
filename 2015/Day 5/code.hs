@@ -46,10 +46,10 @@ is_actually_nice :: String -> Bool
 is_actually_nice str = (contains_double_double str) && (contains_repeat_with_space str)
 
 task_one :: [String] -> Int
-task_one input = sum $ map (bti) (map is_nice input)
+task_one input = sum $ map bti (map is_nice input)
 
 task_two :: [String] -> Int
-task_two input = sum $ map (bti) (map is_actually_nice input)
+task_two input = sum $ map bti (map is_actually_nice input)
 
 main :: IO ()
 main = flux_main id task_one task_two

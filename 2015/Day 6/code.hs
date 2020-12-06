@@ -38,17 +38,6 @@ full_transition grid gt (x:xs) = full_transition new gt xs
 lights_on :: Grid -> Int
 lights_on grid = sum $ (map (\(_, i) -> i) grid)
 
--- deliver :: Grid -> (Int, Int) -> Grid
--- deliver [] pos = [(pos, 1)]
--- deliver ((cell, p):xs) pos
---     | cell == pos = (cell, p + 1):xs
---     | otherwise   = (cell, p):(deliver xs pos)
--- 
--- deliver_all :: String -> Grid -> (Int, Int) -> Grid
--- deliver_all [] grid _       = grid
--- deliver_all (x:xs) grid pos = deliver_all xs (deliver grid new_pos) new_pos
---     where new_pos = move pos x
-
 task_one :: [String] -> Int
 task_one str = lights_on $ full_transition start_grid get_trans_one str
 

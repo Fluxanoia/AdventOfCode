@@ -15,7 +15,7 @@ task_one :: String -> Int
 task_one str = find_answer 5 str 0
 
 task_two :: String -> Int
-task_two str = find_answer 6 str 346386
+task_two str = find_answer 6 str 0
 
 main :: IO ()
-main = flux_main input_str task_one task_two
+main = flux_main concat_all task_one task_two

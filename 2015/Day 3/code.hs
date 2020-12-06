@@ -38,4 +38,4 @@ task_two str = length robo_grid
         (santa, robo) = my_divvy str
 
 main :: IO ()
-main = flux_main input_str task_one task_two
+main = flux_main concat_all task_one task_two

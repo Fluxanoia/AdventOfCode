@@ -5,8 +5,7 @@ import Flux.Core
 
 check_hair :: String -> Bool
 check_hair ('#':hcl) = (length hcl) == 6
-    && (foldr (&&) True 
-    $ map (\c -> elem c $ ['0'..'9'] ++ ['a'..'f']) hcl)
+    && (and_all $ map (\c -> elem c $ ['0'..'9'] ++ ['a'..'f']) hcl)
 check_hair _         = False
 
 check_height :: String -> Bool
@@ -15,7 +14,7 @@ check_height s
     | end == "cm" = 149 < start && 194 > start
     | otherwise  = False
     where 
-        start = sti $ lose 2 s
+        start = sti $ drop_end 2 s
         end = take_end 2 s
 
 check :: (String, String) -> Bool
@@ -30,7 +29,7 @@ check (f, _)     = not $ elem f needed_fields
 
 is_valid_two :: [[(String, String)]] -> [Bool]
 is_valid_two []     = []
-is_valid_two (x:xs) = (foldr (&&) True $ map check x):(is_valid_two xs)
+is_valid_two (x:xs) = (and_all $ map check x):(is_valid_two xs)
 
 -- Task One
 
@@ -38,25 +37,20 @@ needed_fields :: [String]
 needed_fields = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
 
 is_valid_one :: [String] -> Bool
-is_valid_one l = foldr (&&) True (map (\f -> elem f l) needed_fields)
+is_valid_one l = and_all $ map (\f -> elem f l) needed_fields
 
 -- Data Collection
-
-get_entries :: [String] -> [String]
-get_entries strs = splitOn "|" $ foldl f "" strs
-    where
-        f :: String -> String -> String
-        f b a = ternary ((length a) == 0) (b ++ "|") (b ++ " " ++ a)
 
 get_fields :: [String] -> [[String]]
 get_fields strs = map (map $ take_end 3) raw_fields
     where 
-        raw_fields = map ((lose 1) . (splitOn ":")) $ get_entries strs
+        raw_fields = map ((drop_end 1) . (splitOn ":")) strs
 
 get_data :: [String] -> [[String]]
-get_data strs = map (\l -> (map (lose 4) (lose 1 l)) ++ [last l]) raw_data
+get_data strs = map (map $ filter ((/=) ' ')) spaced_data
     where 
-        raw_data = map ((drop 1) . (splitOn ":")) $ get_entries strs
+        spaced_data = map (\l -> (map (drop_end 4) (drop_end 1 l)) ++ [last l]) raw_data
+        raw_data = map ((drop 1) . (splitOn ":")) strs
 
 -- Main Functions
 
@@ -71,4 +65,8 @@ task_two strs = sum $ map bti $ zipWith (&&) valid_one valid_two
         fields = get_fields strs
 
 main :: IO ()
-main = flux_main (map (lose 1)) task_one task_two
+main = flux_main (unify . extend . split) task_one task_two
+    where 
+        unify = map concat_all
+        extend = map $ map (\s -> s ++ " ")
+        split = splitOn [""]

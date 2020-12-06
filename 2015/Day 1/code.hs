@@ -17,4 +17,4 @@ task_two str = snd $ foldl f (0, 0) str
             | otherwise = (floor + (t char), index + 1)
 
 main :: IO ()
-main = flux_main input_str task_one task_two
+main = flux_main concat_all task_one task_two
