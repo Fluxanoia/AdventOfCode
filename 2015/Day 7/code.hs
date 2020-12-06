@@ -89,5 +89,9 @@ task_one :: String -> [String] -> Int32
 task_one v strs = snd $ head $ filter (\p -> fst p == (Var v)) env
     where env = eval (map (parse . tokenize) strs) (Var v) []
 
+task_two :: String -> [String] -> Int32
+task_two v strs = task_one v (((show result) ++ " -> b"):strs)
+    where result = task_one v strs
+
 main :: IO ()
-main = flux_main id (task_one "a") (task_one "a")
+main = flux_main id (task_one "a") (task_two "a")

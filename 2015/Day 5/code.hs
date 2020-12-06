@@ -3,16 +3,10 @@ import Flux.Core
 invalid_substrs :: [String]
 invalid_substrs = ["ab", "cd", "pq", "xy"]
 
-contains :: String -> String -> Bool
-contains [] sub = False
-contains (x:xs) sub
-    | (take (length sub) (x:xs)) == sub = True
-    | otherwise                          = contains xs sub
-
 no_bad_substr :: String -> Bool
 no_bad_substr str = not $ foldr (||) False tests 
     where
-        tests = map (contains str) invalid_substrs
+        tests = map (has_substr str) invalid_substrs
 
 contains_double :: String -> Bool
 contains_double []     = False
@@ -39,7 +33,7 @@ contains_double_double :: String -> Bool
 contains_double_double []     = False
 contains_double_double (x:[]) = False
 contains_double_double (x:y:xs)
-    | contains xs (x:y:[]) = True
+    | has_substr xs (x:y:[]) = True
     | otherwise            = contains_double_double (y:xs)
 
 is_actually_nice :: String -> Bool

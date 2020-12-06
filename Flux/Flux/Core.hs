@@ -38,6 +38,14 @@ is_num str = and_all $ map (\x -> elem x ['0'..'9']) str
 range :: (Ord a, Num a) => a -> a -> a -> Bool
 range l n u = n > l && n < u
 
+-- String Operations
+
+has_substr :: String -> String -> Bool
+has_substr [] sub = False
+has_substr (x:xs) sub
+    | (take (length sub) (x:xs)) == sub = True
+    | otherwise                          = has_substr xs sub
+
 -- List Operations
 
 remove_dupes :: Ord a => [a] -> [a]
